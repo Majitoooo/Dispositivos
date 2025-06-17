@@ -8,6 +8,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,13 +18,17 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.majo.proyectofinal.ui.components.CategoryDropdown
 import com.majo.proyectofinal.ui.components.ImageCard
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
 fun MainScreen(viewModel: CatViewModel = viewModel()) {
+    var showRandom by remember { mutableStateOf(false) }
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFFF0F5)) // fondo lavanda suave
+            .background(Color(0xFFFFF0F5))
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
@@ -32,17 +38,34 @@ fun MainScreen(viewModel: CatViewModel = viewModel()) {
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            // Categoría aleatoria (primera imagen del endpoint general)
-            viewModel.randomImage?.let {
-                ImageCard(
-                    image = it,
-                    title = "🎲 Imagen Aleatoria"
-                )
+            // Botón para mostrar/ocultar imagen aleatoria
+            androidx.compose.material3.Button(
+                onClick = {
+                    showRandom = !showRandom
+                    if (showRandom) {
+                        viewModel.getRandomImage()
+                    }
+                },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(if (showRandom) "Ocultar imagen aleatoria" else "Mostrar imagen aleatoria")
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Mostrar imagen aleatoria si showRandom es true
+            if (showRandom) {
+                viewModel.randomImage?.let {
+                    ImageCard(
+                        image = it,
+                        title = "🎲 Imagen Aleatoria"
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Dropdown para elegir categorías
+            // Dropdown de categorías
             CategoryDropdown(
                 categories = viewModel.categories,
                 selectedCategoryId = viewModel.selectedCategory?.id,
@@ -51,7 +74,6 @@ fun MainScreen(viewModel: CatViewModel = viewModel()) {
                     viewModel.getImages(categoryId)
                 }
             )
-
 
             Spacer(modifier = Modifier.height(16.dp))
 

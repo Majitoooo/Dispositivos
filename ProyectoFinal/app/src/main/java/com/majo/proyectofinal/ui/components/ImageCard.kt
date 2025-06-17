@@ -50,11 +50,23 @@ fun ImageCard(image: CatImage, title: String = "") {
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Mostrar info de la primera raza si existe
+        val breed = image.breeds?.firstOrNull()
+        breed?.let {
+            Text(text = "🐾 Raza: ${it.name}", fontSize = 16.sp)
+            Text(text = "🌍 Origen: ${it.origin}", fontSize = 14.sp)
+            Text(text = "🧠 Temperamento: ${it.temperament}", fontSize = 14.sp)
+            Text(text = "📄 Descripción: ${it.description}", fontSize = 14.sp)
+        } ?: Text("Sin información de raza", fontSize = 14.sp)
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         Button(onClick = { downloadImage(context, image.url) }) {
             Text("Descargar imagen")
         }
     }
 }
+
 
 fun downloadImage(context: Context, imageUrl: String) {
     val request = DownloadManager.Request(Uri.parse(imageUrl))

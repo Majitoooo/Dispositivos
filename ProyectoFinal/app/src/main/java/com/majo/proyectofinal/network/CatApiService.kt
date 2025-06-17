@@ -11,7 +11,9 @@ interface CatApiService {
     @GET("images/search")
     suspend fun getImages(
         @Query("limit") limit: Int = 10,
-        @Query("category_ids") categoryId: Int? = null
+        @Query("category_ids") categoryId: Int? = null,
+        @Query("include_breeds") includeBreeds: Boolean = true,
+        @Query("include_categories") includeCategories: Boolean = true
     ): List<CatImage>
 
     @GET("breeds")
