@@ -4,14 +4,11 @@ import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -50,7 +47,6 @@ fun ImageCard(image: CatImage, title: String = "") {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Mostrar info de la primera raza si existe
         val breed = image.breeds?.firstOrNull()
         breed?.let {
             Text(text = "🐾 Raza: ${it.name}", fontSize = 16.sp)

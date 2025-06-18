@@ -84,39 +84,10 @@ class CatViewModel : ViewModel() {
             try {
                 val response = ApiClient.retrofit.getImages(breedId = breedId)
                 images = response
-                selectedBreed = breeds.find { it.id == breedId } // 👈 aquí se guarda la info
+                selectedBreed = breeds.find { it.id == breedId }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
-    }
-
-    fun searchBreedDetails(name: String, onResult: (String) -> Unit) {
-        viewModelScope.launch {
-            try {
-                val response = ApiClient.retrofit.getBreeds()
-                val matched = response.find { it.name.equals(name, ignoreCase = true) }
-
-                if (matched != null) {
-                    val info = buildString {
-                        append("🐾 Nombre: ${matched.name}\n")
-                        append("📍 Origen: ${matched.origin}\n")
-                        append("📏 Tamaño: ${matched.weight?.metric} kg\n")
-                        append("❤️ Temperamento: ${matched.temperament}")
-                    }
-                    onResult(info)
-                } else {
-                    onResult("No se encontró información para la raza \"$name\".")
-                }
-            } catch (e: Exception) {
-                println("❌ ERROR EN searchBreedDetails: ${e.message}")
-                onResult("Ocurrió un error al buscar la raza.")
-            }
-        }
-    }
-
-    fun onCategorySelected(categoryId: Int?) {
-        selectedCategory = categories.find { it.id == categoryId }
-        getImages(categoryId)
     }
 }

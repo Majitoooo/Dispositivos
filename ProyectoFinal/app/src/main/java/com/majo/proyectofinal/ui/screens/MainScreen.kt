@@ -31,7 +31,6 @@ fun MainScreen(viewModel: CatViewModel = viewModel()) {
             .fillMaxSize()
             .padding(16.dp)) {
 
-            // Mostrar botón de volver si estamos en modo solo gatos
             if (mostrarSoloGatos) {
                 Button(
                     onClick = {
@@ -53,7 +52,6 @@ fun MainScreen(viewModel: CatViewModel = viewModel()) {
                 }
 
             } else {
-                // -------- PANTALLA CON FILTROS Y TODO LO DEMÁS --------
 
                 Text(
                     text = "🐱 Galería de Gatos",
@@ -92,7 +90,6 @@ fun MainScreen(viewModel: CatViewModel = viewModel()) {
                 Divider(thickness = 1.dp, color = Color(0xFFE0C4CD))
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Filtro por categoría
                 Text("📂 Filtrar por categoría", fontWeight = FontWeight.Medium)
                 CategoryDropdown(
                     categories = viewModel.categories,
@@ -106,7 +103,6 @@ fun MainScreen(viewModel: CatViewModel = viewModel()) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Filtro por raza
                 Text("🐾 Filtrar por raza", fontWeight = FontWeight.Medium)
                 BreedDropdown(
                     breeds = viewModel.breeds,
@@ -116,7 +112,6 @@ fun MainScreen(viewModel: CatViewModel = viewModel()) {
                     }
                 )
 
-                // Información de raza seleccionada
                 viewModel.selectedBreed?.let {
                     Spacer(modifier = Modifier.height(12.dp))
                     Card(
