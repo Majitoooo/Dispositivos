@@ -56,8 +56,11 @@ fun ImageCard(image: CatImage, title: String = "") {
             Text(text = "🐾 Raza: ${it.name}", fontSize = 16.sp)
             Text(text = "🌍 Origen: ${it.origin}", fontSize = 14.sp)
             Text(text = "🧠 Temperamento: ${it.temperament}", fontSize = 14.sp)
-            Text(text = "📄 Descripción: ${it.description}", fontSize = 14.sp)
-        } ?: Text("Sin información de raza", fontSize = 14.sp)
+            Text(
+                text = "📄 Descripción: ${it.description ?: "No disponible"}",
+                fontSize = 14.sp
+            )
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 

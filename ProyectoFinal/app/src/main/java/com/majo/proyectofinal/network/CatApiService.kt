@@ -10,10 +10,9 @@ interface CatApiService {
 
     @GET("images/search")
     suspend fun getImages(
-        @Query("limit") limit: Int = 10,
         @Query("category_ids") categoryId: Int? = null,
-        @Query("include_breeds") includeBreeds: Boolean = true,
-        @Query("include_categories") includeCategories: Boolean = true
+        @Query("breed_id") breedId: String? = null,
+        @Query("limit") limit: Int = 10
     ): List<CatImage>
 
     @GET("breeds")
@@ -24,5 +23,9 @@ interface CatApiService {
 
     @GET("images/search")
     suspend fun getRandomImage(): List<CatImage>
+
+    @GET("breeds/search")
+    suspend fun searchBreedByName(@Query("q") breedName: String): List<Breed>
+
 }
 
